@@ -47,6 +47,7 @@ public class PlayerState : MonoBehaviour
         if (!dead)
         {
             dead = true;
+            this.GetComponentInChildren<Animator>().enabled = false;
             this.GetComponent<PlayerController>().enabled = false;
             this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static; // Removes motion physics
             //boxCollider.enabled = true;
