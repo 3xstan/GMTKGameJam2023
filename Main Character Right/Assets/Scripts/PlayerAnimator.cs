@@ -25,6 +25,7 @@ namespace TarodevController
         private bool _playerGrounded;
         private ParticleSystem.MinMaxGradient _currentGradient;
         private Vector2 _movement;
+        public Animator animator;
 
         void Awake() => _player = GetComponentInParent<IPlayerController>();
 

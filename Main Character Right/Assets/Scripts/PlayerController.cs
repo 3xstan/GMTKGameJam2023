@@ -38,6 +38,8 @@ namespace TarodevController
             Velocity = (transform.position - _lastPosition) / Time.deltaTime;
             _lastPosition = transform.position;
 
+            animator = GetComponent<Animator>();
+
             GatherInput();
             RunCollisionChecks();
 
@@ -64,6 +66,7 @@ namespace TarodevController
             {
                 _lastJumpPressed = Time.time;
             }
+            
             if (Input.X > 0 && !facingRight)
             {
                 Flip();
@@ -72,9 +75,14 @@ namespace TarodevController
             {
                 Flip();
             }
-            if (Input.X != 0);       
+            
+            if (Input.X == 0)
             {
-                Speed();
+                animator.SetBool("Move", false);
+            }
+            else
+            {
+                animator.SetBool("Move", true);
             }
         }
 
@@ -85,11 +93,6 @@ namespace TarodevController
             gameObject.transform.localScale = currentScale;
 
             facingRight = !facingRight;
-        }
-
-        void Speed()
-        {
-            animator.SetFloat("Speed", Mathf.Abs(Input.X)); 
         }
 
         #endregion
