@@ -38,7 +38,8 @@ namespace TarodevController
             Velocity = (transform.position - _lastPosition) / Time.deltaTime;
             _lastPosition = transform.position;
 
-            animator = GetComponent<Animator>();
+            //animator = GetComponent<Animator>();
+            Debug.Log(animator);
 
             GatherInput();
             RunCollisionChecks();
@@ -65,6 +66,7 @@ namespace TarodevController
             if (Input.JumpDown)
             {
                 _lastJumpPressed = Time.time;
+                animator.SetBool("Jump", true);
             }
             
             if (Input.X > 0 && !facingRight)
@@ -75,8 +77,12 @@ namespace TarodevController
             {
                 Flip();
             }
-            
-            if (Input.X == 0)
+            /*
+            // Hierarchy of animations. If airborne, should not show idle or move
+            if(Input.JumpDown)
+            {
+            }*/
+            else if (Input.X == 0)
             {
                 animator.SetBool("Move", false);
             }
@@ -93,6 +99,11 @@ namespace TarodevController
             gameObject.transform.localScale = currentScale;
 
             facingRight = !facingRight;
+        }
+
+        public void AnimateDeath()
+        {
+            animator.SetTrigger("DeathTrigger");
         }
 
         #endregion
@@ -119,9 +130,14 @@ namespace TarodevController
             // Ground
             LandingThisFrame = false;
             var groundedCheck = RunDetection(_raysDown);
-            if (_colDown && !groundedCheck) _timeLeftGrounded = Time.time; // Only trigger when first leaving
+            if (_colDown && !groundedCheck)
+            {
+                _timeLeftGrounded = Time.time; // Only trigger when first leaving
+                animator.SetBool("Airborne", true);
+            }
             else if (!_colDown && groundedCheck)
             {
+                animator.SetBool("Airborne", false);
                 _coyoteUsable = true; // Only trigger when first touching
                 LandingThisFrame = true;
             }

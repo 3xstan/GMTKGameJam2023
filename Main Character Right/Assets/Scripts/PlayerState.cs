@@ -47,11 +47,13 @@ public class PlayerState : MonoBehaviour
         if (!dead)
         {
             dead = true;
-            this.GetComponent<PlayerController>().enabled = false;
-            this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static; // Removes motion physics
+            PlayerController playerController = GetComponent<PlayerController>();
+            playerController.AnimateDeath();
+            playerController.enabled = false;
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static; // Removes motion physics
             //boxCollider.enabled = true;
-            this.tag = "Untagged";
-            this.gameObject.layer = 3; // Layer becomes Ground
+            tag = "Untagged";
+            gameObject.layer = 3; // Layer becomes Ground
         }
 
     }

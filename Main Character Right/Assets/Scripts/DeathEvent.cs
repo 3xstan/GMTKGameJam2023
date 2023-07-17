@@ -36,7 +36,7 @@ public class DeathEvent : MonoBehaviour
         
         currentPlayer.Dies(); // Only changes labels, not position or rotation
 
-        currentPlayer.transform.Rotate(0, 0, -90);
+        //currentPlayer.transform.Rotate(0, 0, -90);
 
         SpawnPlayer();
 
