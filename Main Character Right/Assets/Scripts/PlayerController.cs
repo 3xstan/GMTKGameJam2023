@@ -20,6 +20,8 @@ namespace TarodevController
         public bool LandingThisFrame { get; private set; }
         public Vector3 RawMovement { get; private set; }
         public bool Grounded => _colDown;
+        public bool facingRight = true;
+        public Animator animator;
 
         private Vector3 _lastPosition;
         private float _currentHorizontalSpeed, _currentVerticalSpeed;
@@ -56,12 +58,38 @@ namespace TarodevController
             {
                 JumpDown = UnityEngine.Input.GetButtonDown("Jump"),
                 JumpUp = UnityEngine.Input.GetButtonUp("Jump"),
-                X = UnityEngine.Input.GetAxisRaw("Horizontal")
+                X = UnityEngine.Input.GetAxisRaw("Horizontal"),
             };
             if (Input.JumpDown)
             {
                 _lastJumpPressed = Time.time;
             }
+            if (Input.X > 0 && !facingRight)
+            {
+                Flip();
+            }
+            if (Input.X < 0 && facingRight)
+            {
+                Flip();
+            }
+            if (Input.X != 0);       
+            {
+                Speed();
+            }
+        }
+
+        void Flip()
+        {
+            Vector3 currentScale = gameObject.transform.localScale;
+            currentScale.x *= -1;
+            gameObject.transform.localScale = currentScale;
+
+            facingRight = !facingRight;
+        }
+
+        void Speed()
+        {
+            animator.SetFloat("Speed", Mathf.Abs(Input.X)); 
         }
 
         #endregion
