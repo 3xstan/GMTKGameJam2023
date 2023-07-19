@@ -46,7 +46,6 @@ public class DeathEvent : MonoBehaviour
 
     public void SpawnPlayer()
     {
-        Debug.Log("SwapPlayer() was called");
         Vector3 spawnCoords = spawnPoint.transform.position;
         currentPlayer = 
             Instantiate(nextPlayer, 

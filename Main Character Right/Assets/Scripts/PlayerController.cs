@@ -38,8 +38,6 @@ namespace TarodevController
             Velocity = (transform.position - _lastPosition) / Time.deltaTime;
             _lastPosition = transform.position;
 
-            //animator = GetComponent<Animator>();
-            Debug.Log(animator);
 
             GatherInput();
             RunCollisionChecks();
